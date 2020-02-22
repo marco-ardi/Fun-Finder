@@ -1,0 +1,73 @@
+create table Citta(
+    codiceIstat INT NOT NULL,
+    cap CHAR(5),
+    nome VARCHAR(20),
+    regione VARCHAR(20),
+    provincia VARCHAR(20),
+    
+    PRIMARY KEY(codiceIstat)
+    );
+    
+create table Locale(
+    idL int NOT NULL,
+    idCitta int NOT NULL,
+    nome VARCHAR(20),
+    indirizzo VARCHAR(20), 
+    capienza int,
+    
+    PRIMARY KEY(idL),
+    FOREIGN KEY(idCitta) REFERENCES Citta(codiceIstat)
+    );
+    
+create table Evento(
+    idE int NOT NULL,
+    idL int NOT NULL,
+    `data` date,
+    ora time,
+    prezzo float,
+    tipologiaEvento VARCHAR(20),
+    
+    PRIMARY KEY(idE),
+    FOREIGN KEY(idL) REFERENCES Locale(idL)
+    );
+    
+create table OspitiSpeciali(
+    CF CHAR(16) NOT NULL,
+    idE int NOT NULL,
+    nome VARCHAR(20), 
+    cognome VARCHAR(20),
+    telefono CHAR(10),
+    
+    PRIMARY KEY(CF, idE),
+    FOREIGN KEY(idE) REFERENCES Evento(idE)
+    );
+    
+create table Persona(
+    CF CHAR(16) NOT NULL,
+    nome VARCHAR(20), 
+    cognome VARCHAR(20),
+    dataNascita date,
+    telefono CHAR(10),
+    
+    PRIMARY KEY(CF)
+    );
+    
+create table Organizzazione(
+    idE int NOT NULL,
+    CF CHAR(16) NOT NULL,
+    ruolo VARCHAR(20),
+    
+    PRIMARY KEY(idE, CF),
+    FOREIGN KEY(idE) REFERENCES Evento(idE),
+    FOREIGN KEY(CF) REFERENCES Persona(CF)
+    );
+    
+create table Invitati(
+    idE int NOT NULL,
+    CF CHAR(16) NOT NULL,
+    
+    PRIMARY KEY(idE, CF),
+    FOREIGN KEY(idE) REFERENCES Evento(idE),
+    FOREIGN KEY(CF) REFERENCES Persona(CF)
+    );
+    

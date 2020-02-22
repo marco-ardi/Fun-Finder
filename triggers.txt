@@ -1,0 +1,105 @@
+DELIMITER $$
+ 
+CREATE TRIGGER after_insert_organizzazione
+AFTER INSERT ON organizzazione
+FOR EACH ROW
+BEGIN
+    
+DELETE FROM invitati
+	   WHERE invitati.idE=new.idE and invitati.CF= new.CF;
+
+END
+
+
+DELIMITER $$
+ 
+CREATE TRIGGER after_insert_invitati
+AFTER INSERT ON invitati
+FOR EACH ROW
+BEGIN
+    
+BEGIN
+    
+DELETE FROM organizzazione
+	   WHERE organizzazione.idE=new.idE and organizzazione.CF= new.CF;
+
+END
+
+
+
+DELIMITER $$
+CREATE TRIGGER priceCheck BEFORE INSERT ON evento
+       FOR EACH ROW
+       BEGIN
+           IF NEW.prezzo < 0 THEN
+               SET NEW.prezzo = 0;
+           END IF;
+       END
+DELIMITER $$
+
+
+DELIMITER $$
+CREATE TRIGGER capienzaCheck BEFORE INSERT ON locale
+       FOR EACH ROW
+       BEGIN
+           IF NEW.capienza < 0 THEN
+               SET NEW.capienza = 0;
+           END IF;
+       END;$$
+DELIMITER $$
+
+
+
+DELIMITER $$
+CREATE TRIGGER dateCheck BEFORE INSERT ON evento
+       FOR EACH ROW
+       BEGIN
+           IF NEW.`data` < date(now()) THEN
+               set NEW.`data`= date(now());
+           END IF;
+       END;$$
+DELIMITER $$
+
+
+DELIMITER $$
+CREATE TRIGGER etaCheck BEFORE INSERT ON invitati
+       FOR EACH ROW
+       BEGIN
+       DECLARE eta integer;
+       SET @eta =(SELECT YEAR(CURDATE()) - YEAR(birthdate) AS eta
+                   FROM persona p
+                   WHERE p.CF= new.CF);
+       
+           IF eta>=18  THEN
+               insert into invitati(idE, CF) values(new.idE, new.CF);
+           END IF;
+       END;$$
+DELIMITER $$
+
+
+DELIMITER $$
+CREATE TRIGGER startedEventCheck BEFORE INSERT ON invitati
+       FOR EACH ROW
+       BEGIN
+       DECLARE giornoOra datetime;
+       SET @giornoOra :=(SELECT CONCAT(e.`data`, ' ', e.ora) AS giornoOra
+                   FROM evento e
+                   WHERE e.idE= new.idE);
+       
+           IF giornoOra> now()  THEN
+               insert into invitati(idE, CF) values(new.idE, new.CF);
+           END IF;
+       END;$$
+DELIMITER $$
+
+
+DELIMITER $$
+CREATE TRIGGER personBirthdayCheck BEFORE INSERT ON persona
+       FOR EACH ROW
+BEGIN
+
+           IF  new.dataNascita> date(now()) THEN
+              insert into persona(CF, cognome, dataNascita, nome, telefono) values(new.CF, new.cognome, date(now()), new.nome, new.telefono);
+        
+           END IF;
+       END

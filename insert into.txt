@@ -1,0 +1,67 @@
+insert into Citta(codiceIstat, cap, nome, provincia, regione) values(087032,95046, "palagonia", "CT", "sicilia");
+insert into Citta(codiceIstat, cap, nome, provincia, regione) values(087037,95040, "ramacca", "CT", "sicilia");
+insert into Citta(codiceIstat, cap, nome, provincia, regione) values(087015, 95100, "catania", "CT", "sicilia");
+insert into Citta(codiceIstat, cap, nome, provincia, regione) values(015146, 20019, "milano", "MI", "lombardia");
+insert into Citta(codiceIstat, cap, nome, provincia, regione) values(058091, 00100, "roma", "RM", "lazio");
+
+insert into locale(idL, idCitta, nome, indirizzo, capienza) values(001, 087015, "ecs dogana", "via dusmet", 10000);
+insert into locale(idL, idCitta, nome, indirizzo, capienza) values(002, 087037, "blanco club", "via roma", 5000);
+insert into locale(idL, idCitta, nome, indirizzo, capienza) values(003, 087032, "vertigo", "via palermo", 6500);
+insert into locale(idL, idCitta, nome, indirizzo, capienza) values(004, 058091, "armani club", "via dusmet", 25000);
+insert into locale(idL, idCitta, nome, indirizzo, capienza) values(005, 087015, "afrobar", "viale kennedy", 12000);
+
+insert into Evento(idE, idL, `data`, ora, prezzo, tipologiaEvento) values(001, 001, date "2020-01-31", "23:00", 30, "Capodanno");
+insert into Evento(idE, idL, `data`, ora, prezzo, tipologiaEvento) values(002, 005, date "2020-02-03", "00:00", 15, "Fluo Party");
+insert into Evento(idE, idL, `data`, ora, prezzo, tipologiaEvento) values(003, 002, date "2020-02-20", "22:30", 12, "Carnevale");
+insert into Evento(idE, idL, `data`, ora, prezzo, tipologiaEvento) values(004, 005, date "2020-05-01", "10:00", 35, "OneDay Music");
+insert into Evento(idE, idL, `data`, ora, prezzo, tipologiaEvento) values(005, 004, date "2020-08-15", "22:00", 30, "Ferragosto Party");
+
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("HDMLCL61R60B705X", 004, "sfera", "ebbasta", "cantante");
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("KZYTQA59H58D689E", 004, "travis", "scott", "cantante");
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("ZHZQRM82L25F861D", 001, "skillex", NULL, "DJ");
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("GVPRJE86P68D491Z", 002, "ludovica", "pagani", "influencer");
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("RVPMLN36L30B128A", 003, "martin", "garrix", "DJ");
+insert into ospitispeciali(CF, idE, nome, cognome, professione) values("RJLBNP65M08L065P", 005, "night", "skinny", "DJ");
+
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("CJTVLZ78C44F639J", "davide","casano",date "1999-04-02","3381881234");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("VPNNFR42B60C082S", "valerio","catania",date "1999-07-09","3381882345");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("LRPLMV81P54M126K", "christian","gurrieri",date "1999-07-12","3381883456");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("THMVMF72P63H235Q", "marco","ardizzone",date "1999-03-02","3381884567");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("PRJHCW63R45G638F", "giorgio","gambino",date "1998-09-23","3381885678");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("CGSZZT35S67I487X", "salvatore","ardizzone",date "1996-10-22","3381889876");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("LNCNVU43E31C276O", "mario", "rossi",date "1999-10-02","3381889454");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("NGNYHD32E06F030D", "luigi","gialli",date "1992-12-21","3392881234");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("NSINQC53R59C274V", "francesco","viola",date "1991-11-17","3321881234");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("QHYXHR97R71A045Z", "fausto","di stefano",date "1999-04-02","3381771234");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("VHCLJR69L57I351L", "giuseppe","manfredi",date "1998-08-30","3381946234");
+insert into Persona(CF, nome, cognome, dataNascita, telefono) values("MHULQV72M68G419W", "andrea","campisi",date "1999-08-08","3291881234");
+
+insert into invitati(idE, CF) values (001, "CJTVLZ78C44F639J");
+insert into invitati(idE, CF) values (001, "VPNNFR42B60C082S");
+insert into invitati(idE, CF) values (001, "THMVMF72P63H235Q");
+insert into invitati(idE, CF) values (001, "PRJHCW63R45G638F");
+insert into invitati(idE, CF) values (002, "VPNNFR42B60C082S");
+insert into invitati(idE, CF) values (002, "THMVMF72P63H235Q");
+insert into invitati(idE, CF) values (002, "CGSZZT35S67I487X");
+insert into invitati(idE, CF) values (002, "LNCNVU43E31C276O");
+insert into invitati(idE, CF) values (002, "CJTVLZ78C44F639J");
+insert into invitati(idE, CF) values (003, "CGSZZT35S67I487X");
+insert into invitati(idE, CF) values (003, "CJTVLZ78C44F639J");
+insert into invitati(idE, CF) values (004, "LNCNVU43E31C276O");
+insert into invitati(idE, CF) values (004, "CGSZZT35S67I487X");
+insert into invitati(idE, CF) values (004, "VPNNFR42B60C082S");
+insert into invitati(idE, CF) values (005, "LNCNVU43E31C276O");
+insert into invitati(idE, CF) values (005, "CJTVLZ78C44F639J");
+
+insert into organizzazione(idE, CF, ruolo) values(001, "MHULQV72M68G419W", "PR");
+insert into organizzazione(idE, CF, ruolo) values(001, "VHCLJR69L57I351L", "barman");
+insert into organizzazione(idE, CF, ruolo) values(001, "QHYXHR97R71A045Z", "sicurezza");
+insert into organizzazione(idE, CF, ruolo) values(001, "NGNYHD32E06F030D", "PR");
+insert into organizzazione(idE, CF, ruolo) values(002, "NGNYHD32E06F030D", "barman");
+insert into organizzazione(idE, CF, ruolo) values(002, "NSINQC53R59C274V", "sicurezza");
+insert into organizzazione(idE, CF, ruolo) values(002, "MHULQV72M68G419W", "PR");
+insert into organizzazione(idE, CF, ruolo) values(003, "VHCLJR69L57I351L", "barman");
+insert into organizzazione(idE, CF, ruolo) values(004, "QHYXHR97R71A045Z", "sicurezza");
+insert into organizzazione(idE, CF, ruolo) values(005, "MHULQV72M68G419W", "PR");
+insert into organizzazione(idE, CF, ruolo) values(005, "NSINQC53R59C274V", "PR");
+insert into organizzazione(idE, CF, ruolo) values(005, "VHCLJR69L57I351L", "PR");
