@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 22, 2020 alle 13:10
+-- Creato il: Feb 23, 2020 alle 01:58
 -- Versione del server: 5.7.17
 -- Versione PHP: 5.6.30
 
@@ -125,6 +125,7 @@ INSERT INTO `invitati` (`idE`, `CF`) VALUES
 (4, 'LNCNVU43E31C276O'),
 (4, 'VPNNFR42B60C082S'),
 (5, 'CJTVLZ78C44F639J'),
+(5, 'GVPRJE86P68D491Z'),
 (5, 'LNCNVU43E31C276O');
 
 --
@@ -142,11 +143,11 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `etaCheck` BEFORE INSERT ON `invitati` FOR EACH ROW BEGIN
        DECLARE eta integer;
-       SET @eta :=(SELECT (YEAR(now()) - YEAR(p.dataNascita)) AS eta
+       SET @eta =(SELECT (YEAR(now()) - YEAR(p.dataNascita)) AS eta
                    FROM persona p
                    WHERE p.CF= new.CF);
        
-           IF eta>=18  THEN
+           IF @eta>=18  THEN
                insert into invitati(idE, CF) values(new.idE, new.CF);
 
            END IF;
@@ -302,7 +303,8 @@ INSERT INTO `persona` (`CF`, `nome`, `cognome`, `dataNascita`, `telefono`) VALUE
 ('NSINQC53R59C274V', 'francesco', 'viola', '1991-11-17', '3321881234'),
 ('QHYXHR97R71A045Z', 'fausto', 'di stefano', '1999-04-02', '3381771234'),
 ('VHCLJR69L57I351L', 'giuseppe', 'manfredi', '1998-08-30', '3381946234'),
-('MHULQV72M68G419W', 'andrea', 'campisi', '1999-08-08', '3291881234');
+('MHULQV72M68G419W', 'andrea', 'campisi', '1999-08-08', '3291881234'),
+('wwwwwwwwwwwww', 'prova', 'test', '2000-11-11', NULL);
 
 --
 -- Trigger `persona`
