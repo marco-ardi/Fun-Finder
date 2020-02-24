@@ -59,7 +59,7 @@ create table Organizzazione(
     
     PRIMARY KEY(idE, CF),
     FOREIGN KEY(idE) REFERENCES Evento(idE),
-    FOREIGN KEY(CF) REFERENCES Persona(CF)
+    FOREIGN KEY(CF) REFERENCES Persona(CF) ON DELETE CASCADE
     );
     
 create table Invitati(
@@ -68,6 +68,7 @@ create table Invitati(
     
     PRIMARY KEY(idE, CF),
     FOREIGN KEY(idE) REFERENCES Evento(idE),
-    FOREIGN KEY(CF) REFERENCES Persona(CF)
+    FOREIGN KEY(CF) REFERENCES Persona(CF) ON DELETE CASCADE
     );
+
     
