@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 23, 2020 alle 01:58
+-- Creato il: Feb 24, 2020 alle 16:18
 -- Versione del server: 5.7.17
 -- Versione PHP: 5.6.30
 
@@ -147,7 +147,7 @@ CREATE TRIGGER `etaCheck` BEFORE INSERT ON `invitati` FOR EACH ROW BEGIN
                    FROM persona p
                    WHERE p.CF= new.CF);
        
-           IF @eta>=18  THEN
+           IF @eta<=18  THEN
                insert into invitati(idE, CF) values(new.idE, new.CF);
 
            END IF;
@@ -303,8 +303,7 @@ INSERT INTO `persona` (`CF`, `nome`, `cognome`, `dataNascita`, `telefono`) VALUE
 ('NSINQC53R59C274V', 'francesco', 'viola', '1991-11-17', '3321881234'),
 ('QHYXHR97R71A045Z', 'fausto', 'di stefano', '1999-04-02', '3381771234'),
 ('VHCLJR69L57I351L', 'giuseppe', 'manfredi', '1998-08-30', '3381946234'),
-('MHULQV72M68G419W', 'andrea', 'campisi', '1999-08-08', '3291881234'),
-('wwwwwwwwwwwww', 'prova', 'test', '2000-11-11', NULL);
+('MHULQV72M68G419W', 'andrea', 'campisi', '1999-08-08', '3291881234');
 
 --
 -- Trigger `persona`
@@ -342,7 +341,7 @@ ALTER TABLE `evento`
 --
 ALTER TABLE `invitati`
   ADD PRIMARY KEY (`idE`,`CF`),
-  ADD KEY `CF` (`CF`);
+  ADD KEY `cf` (`CF`);
 
 --
 -- Indici per le tabelle `locale`
@@ -356,7 +355,7 @@ ALTER TABLE `locale`
 --
 ALTER TABLE `organizzazione`
   ADD PRIMARY KEY (`idE`,`CF`),
-  ADD KEY `CF` (`CF`);
+  ADD KEY `cf` (`CF`);
 
 --
 -- Indici per le tabelle `ospitispeciali`
