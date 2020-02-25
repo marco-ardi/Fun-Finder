@@ -1,0 +1,36 @@
+O1: Inserimento di un nuovo evento
+INSERT INTO evento(idL, Data, Ora, Prezzo, Tipologia evento) VALUES(...)
+
+O2: Inserimento di un nuovo locale
+INSERT INTO locale(idCitta, Nome, Indirizzo, Capienza) VALUES(...)
+
+O3: Inserimento di un nuovo partecipante (DEVE esistere già in Persona)
+INSERT INTO invitati(idE, CF) VALUES(...)
+
+O4: Inserimento di un nuovo organizzatore (DEVE esistere già in Persona)
+INSERT INTO organizzazione(idE, CF) VALUES(...)
+
+O5: Lettura lista partecipante ad un evento
+SELECT i.cf
+FROM invitati i, evento e
+WHERE i.idE = e.idE
+
+O6: Lettura lista organizzatori di un evento
+SELECT o.cf 
+FROM organizzazione o, evento e
+WHERE o.idE = e.idE
+
+O7: Lettura lista ospiti speciali di un evento
+SELECT os.cf
+FROM ospitispeciali os, evento e
+WHERE os.idE = e.idE
+
+O8: Numero di partecipanti ad un evento
+SELECT count(i.cf)
+FROM invitati i, evento e
+WHERE i.idE=e.idE
+
+O9: Ricerca eventi in città
+SELECT e.tipologiaEvento
+FROM evento e, citta c
+WHERE e.idL=c.codiceIstat
