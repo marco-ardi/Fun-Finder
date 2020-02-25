@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 24, 2020 alle 16:18
+-- Creato il: Feb 25, 2020 alle 18:59
 -- Versione del server: 5.7.17
 -- Versione PHP: 5.6.30
 
@@ -369,7 +369,21 @@ ALTER TABLE `ospitispeciali`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`CF`);
-COMMIT;
+
+--
+-- AUTO_INCREMENT per le tabelle scaricate
+--
+
+--
+-- AUTO_INCREMENT per la tabella `evento`
+--
+ALTER TABLE `evento`
+  MODIFY `idE` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT per la tabella `locale`
+--
+ALTER TABLE `locale`
+  MODIFY `idL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
