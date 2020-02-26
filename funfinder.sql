@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 25, 2020 alle 18:59
+-- Creato il: Feb 26, 2020 alle 10:58
 -- Versione del server: 5.7.17
 -- Versione PHP: 5.6.30
 
@@ -132,12 +132,14 @@ INSERT INTO `invitati` (`idE`, `CF`) VALUES
 -- Trigger `invitati`
 --
 DELIMITER $$
-CREATE TRIGGER `after_insert_invitati` AFTER INSERT ON `invitati` FOR EACH ROW BEGIN
+CREATE TRIGGER `before_insert_invitati` BEFORE INSERT ON `invitati` FOR EACH ROW BEGIN
     
-DELETE FROM organizzazione
-	   WHERE organizzazione.idE=new.idE and organizzazione.CF= new.CF;
-
-END
+IF (new.CF IN (SELECT o.CF
+               FROM organizzazione o
+               WHERE new.idE=o.idE ) ) THEN
+     INSERT INTO invitati(CF, idE) VALUES(new.CF, new.idE);
+     END IF;
+     END
 $$
 DELIMITER ;
 DELIMITER $$
@@ -238,12 +240,14 @@ INSERT INTO `organizzazione` (`idE`, `CF`, `ruolo`) VALUES
 -- Trigger `organizzazione`
 --
 DELIMITER $$
-CREATE TRIGGER `after_insert_organizzazione` AFTER INSERT ON `organizzazione` FOR EACH ROW BEGIN
+CREATE TRIGGER `before_insert_organizzazione` BEFORE INSERT ON `organizzazione` FOR EACH ROW BEGIN
     
-DELETE FROM invitati
-	   WHERE invitati.idE=new.idE and invitati.CF= new.CF;
-
-END
+IF (new.CF  IN (SELECT i.CF
+               FROM invitati i
+               WHERE new.idE=i.idE ) ) THEN
+     INSERT INTO organizzazione(CF, idE, ruolo) VALUES(new.CF, new.idE, new.ruolo);
+     END IF;
+     END
 $$
 DELIMITER ;
 
