@@ -5,10 +5,13 @@ BEFORE INSERT ON organizzazione
 FOR EACH ROW
 BEGIN
     
-IF (new.CF  IN (SELECT i.CF
+IF (new.CF IN (SELECT i.CF
                FROM invitati i
                WHERE new.idE=i.idE ) ) THEN
-     INSERT INTO organizzazione(CF, idE, ruolo) VALUES(new.CF, new.idE, new.ruolo);
+				SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT='Dato esistente in Organizzatore', MYSQL_ERRNO=1001;
+               
+                
      END IF;
      END
 
@@ -19,11 +22,14 @@ CREATE TRIGGER before_insert_invitati
 BEFORE INSERT ON invitati
 FOR EACH ROW
 BEGIN
-
+    
 IF (new.CF IN (SELECT o.CF
                FROM organizzazione o
                WHERE new.idE=o.idE ) ) THEN
-     INSERT INTO invitati(CF, idE) VALUES(new.CF, new.idE);
+				SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT='Dato esistente in Organizzatore', MYSQL_ERRNO=1001;
+               
+                
      END IF;
      END
 
@@ -68,12 +74,14 @@ CREATE TRIGGER etaCheck BEFORE INSERT ON invitati
        FOR EACH ROW
        BEGIN
        DECLARE eta integer;
-       SET @eta =(SELECT YEAR(CURDATE()) - YEAR(birthdate) AS eta
+       SET @eta =(SELECT (YEAR(now()) - YEAR(p.dataNascita)) AS eta
                    FROM persona p
                    WHERE p.CF= new.CF);
        
-           IF @eta>=18  THEN
-               insert into invitati(idE, CF) values(new.idE, new.CF);
+           IF @eta<=18  THEN
+				SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT='Minorenni non ammessi.', MYSQL_ERRNO=1001;
+
            END IF;
        END;$$
 DELIMITER $$
@@ -84,12 +92,13 @@ CREATE TRIGGER startedEventCheck BEFORE INSERT ON invitati
        FOR EACH ROW
        BEGIN
        DECLARE giornoOra datetime;
-       SET @giornoOra :=(SELECT CONCAT(e.`data`, ' ', e.ora) AS giornoOra
+       SET @giornoOra =(SELECT CONCAT(e.`data`, ' ', e.ora) AS giornoOra
                    FROM evento e
                    WHERE e.idE= new.idE);
        
-           IF giornoOra> now()  THEN
-               insert into invitati(idE, CF) values(new.idE, new.CF);
+           IF @giornoOra< now()  THEN
+				SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT='Evento già avvenuto, impossibile aggiungere partecipante.', MYSQL_ERRNO=1001;
            END IF;
        END;$$
 DELIMITER $$
@@ -101,7 +110,8 @@ CREATE TRIGGER personBirthdayCheck BEFORE INSERT ON persona
 BEGIN
 
            IF  new.dataNascita> date(now()) THEN
-              insert into persona(CF, cognome, dataNascita, nome, telefono) values(new.CF, new.cognome, date(now()), new.nome, new.telefono);
+				SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT='Impossibile aggiungere persone non ancora nate.', MYSQL_ERRNO=1001;
         
            END IF;
        END
